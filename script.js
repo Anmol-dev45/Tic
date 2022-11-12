@@ -111,7 +111,7 @@ const Condition = (() => {
     const winnerModal = () => {
         if (winner) {
 
-            gameMssg.innerHTML = `Player ${winner} win game`;
+            gameMssg.innerHTML = `Player ${winner} win game🍗🍗`;
             return
         }
         else if (round === 9) {
