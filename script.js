@@ -115,7 +115,7 @@ const Condition = (() => {
             return
         }
         else if (round === 9) {
-            gameMssg.innerHTML = `The game is draw`;
+            gameMssg.innerHTML = `The game is draw🤨`;
         }
 
     }
