@@ -1,5 +1,5 @@
 let winner = ''
-round = 0
+let round = 0
 let Players = [
     {
         Player: "X"
@@ -9,19 +9,39 @@ let Players = [
     }
 ]
 
-
+//accessing html elements
 const gameBoard = document.querySelectorAll('.game-board li')
 const gameMssg = document.querySelector("#game-mssg")
 const restartButton = document.querySelector('#restart')
+
+
 gameBoard.forEach(li => {
     li.addEventListener('click', () => {
 
+        // all the logic for game
 
-        Game.startGame(li);
-        Game.displayMssg();
-        Condition.checkWinner("X");
-        Condition.checkWinner("O");
-        Condition.winnerModal();
+            //to check that the move are not repeted and cause bugs
+            if (li.innerHTML) {
+
+
+                return;
+            }
+            //for starting and giving data to variables
+            Game.startGame(li);
+
+            //to display mssg after an event
+            Game.displayMssg();
+
+            //to check whether the winner is found or not 
+
+                //for X
+                Condition.checkWinner("X");
+
+                //for O
+                Condition.checkWinner("O");
+
+            //logic of what to do and show after the winner is found    
+            Condition.winnerModal();
 
     })
 
@@ -32,9 +52,10 @@ restartButton.addEventListener('click', () => {
 })
 
 const Game = (() => {
+    //initilizing player
     let currentplayer = 0
 
-
+    // logic gor player Change
     const changePlayer = () => {
         if (!currentplayer) {
             currentplayer = 1
@@ -45,16 +66,14 @@ const Game = (() => {
         }
         round++
     }
+
     const displayMssg = () => {
 
         changePlayer()
         gameMssg.innerHTML = `Player ${Players[currentplayer].Player}'s turn`
     }
     const startGame = (li) => {
-        if (li.innerHTML) {
-            changePlayer()
-            return;
-        }
+
         console.log(winner)
         if (winner) {
             return
@@ -92,7 +111,7 @@ const Condition = (() => {
 
     const checkWinner = (sign) => {
         for (let i = 0; i < winConditions.length; i++) {
-            let perk = 0;
+            let perk = 0;       // an helping variable for checking content of all 3 indexes
             for (let j = 0; j < 3; j++) {
                 // console.log(perk)
                 if (document.getElementById(`${winConditions[i][j]}`).innerHTML === sign) {
@@ -100,7 +119,8 @@ const Condition = (() => {
                 }
             }
             // console.log(sign)
-            if (perk === 3) {
+            
+            if (perk === 3) {               // if all indexes have same singn "O" or "X"
                 winner = sign;
                 break;
 
@@ -109,14 +129,14 @@ const Condition = (() => {
     };
 
     const winnerModal = () => {
-        if (winner) {
-
-            gameMssg.innerHTML = `Player ${winner} win game🍗🍗`;
-            return
-        }
-        else if (round === 9) {
-            gameMssg.innerHTML = `The game is draw🤨`;
-        }
+        //displaying final messaage
+            if (winner) {
+                gameMssg.innerHTML = `Player ${winner} win the game🍗`;
+                return
+            }
+            else if (round === 9) {
+                gameMssg.innerHTML = `The game is draw😐`;
+            }
 
     }
 
